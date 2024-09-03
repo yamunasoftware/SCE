@@ -10,13 +10,22 @@ On the operations side of things, Flask is used to deploy the server backend API
 
 **NOTE: All of the tools are written in Bash scripting, which means that the intended purpose of this tool is to be deployed on a Linux server or a WSL (Windows Subsystem for Linux) system.**
 
-## Docker
+## Docker and Kubernetes
 
 To use Docker, you can follow the following commands to build and deploy the API:
 
 ```
 docker build -t SCE .
 docker run -d -p 5000:5000 SCE
+```
+
+To deploy the Docker image on Kubernetes, you can use the provided ```deployment.yaml``` file. To, deploy follow the commands below:
+
+```
+kubectl apply -f deployment.yaml
+kubectl get deployment
+kubectl get pods
+kubectl get svc
 ```
 
 ## Dependencies
