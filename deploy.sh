@@ -1,4 +1,6 @@
 #!/bin/bash
 
-cd src/scripts
-bash serve.sh
+docker buildx prune -f
+docker compose down
+docker compose build
+docker compose up -d

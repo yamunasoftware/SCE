@@ -9,13 +9,15 @@ from ml import svm_interface
 from ml import preprocessing
 
 from flask import Flask, jsonify, request
+from waitress import serve
+
 import pandas as pd
 import logging
 
 ### API SETUP ###
 
 # Logging Setup:
-file_name = 'log.txt'
+file_name = 'server.log'
 logging.basicConfig(
   filename = file_name,
   level = logging.INFO,
@@ -26,7 +28,7 @@ logging.basicConfig(
 def clear_log():
   with open(file_name, 'w') as file:
     pass
-    file.write('Server API Call Information:\n\n')
+    file.write('--- SERVER LOG ---\n\n')
 
 # Setup Flask:
 api = Flask(__name__)
@@ -155,4 +157,4 @@ def heartbeat():
 
 # Runs the API:
 if __name__ == '__main__':
-  api.run()
+  serve(api, host="0.0.0.0", port=2016)
