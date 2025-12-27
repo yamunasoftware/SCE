@@ -1,11 +1,12 @@
-FROM ubuntu:latest
+FROM python:3.12-slim
 WORKDIR /main
 USER root
 COPY . .
 
-RUN apt-get update
-RUN apt-get install -y python3-pip libpq-dev libnuma-dev libsasl2-modules-gssapi-mit ca-certificates openssl
+RUN apt-get update && apt-get install -y ca-certificates dos2unix
 RUN pip3 install --no-cache-dir -r requirements.txt
+RUN dos2unix /main/*
 
 EXPOSE 2016
-CMD ["bash", "server.sh"]
+WORKDIR /main/scripts
+CMD ["bash", "serve.sh"]

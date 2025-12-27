@@ -1,29 +1,15 @@
 ### INTERFACE IMPORTS ###
 
 import numpy as np
-import warnings
 import os
-
-import sys
-from os.path import dirname, join, abspath
-sys.path.insert(0, abspath(join(dirname(__file__), '..')))
-
-from ml import preprocessing
-from ml import svm
-
-### INTERFACE SETUP ###
-
-# Warnings Setup:
-warnings.filterwarnings('ignore')
-parent_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-# Default File Names:
-theta_filename = os.path.join(parent_dir, "theta.npy")
-theta0_filename = os.path.join(parent_dir, "theta0.npy")
+import ml.preprocessing as preprocessing
+import ml.svm as svm
 
 ### INTERFACE FUNCTIONS ###
 
-# Default Lookup Table:
+# Default Weights Filenames and Lookup Table:
+theta_filename = "/main/models/theta.npy"
+theta0_filename = "/main/models/theta0.npy"
 lookup_table = {
   -1: 'Negative',
   1: 'Positive'

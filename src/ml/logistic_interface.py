@@ -1,26 +1,14 @@
 ### INTERFACE IMPORTS ###
 
 import numpy as np
-import warnings
 import os
-
-import sys
-from os.path import dirname, join, abspath
-sys.path.insert(0, abspath(join(dirname(__file__), '..')))
-
-from ml import preprocessing
-from ml import logistic
-
-### INTERFACE SETUP ###
-
-# Warnings Setup and Default Filename:
-warnings.filterwarnings('ignore')
-parent_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-filename = os.path.join(parent_dir, "weights.npy")
+import ml.preprocessing as preprocessing
+import ml.logistic as logistic
 
 ### INTERFACE FUNCTIONS ###
 
-# Default Lookup Table:
+# Default Weights Filename and Lookup Table:
+filename = "/main/models/weights.npy"
 lookup_table = {
   -1: 'Negative',
   1: 'Positive'

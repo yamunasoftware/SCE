@@ -1,16 +1,11 @@
 ### API IMPORTS ###
 
-import sys
-from os.path import dirname, join, abspath
-sys.path.insert(0, abspath(join(dirname(__file__), '..')))
-
-from ml import logistic_interface
-from ml import svm_interface
-from ml import preprocessing
+import ml.logistic_interface as logistic_interface
+import ml.svm_interface as svm_interface
+import ml.preprocessing as preprocessing
 
 from flask import Flask, jsonify, request
 from waitress import serve
-
 import pandas as pd
 import logging
 

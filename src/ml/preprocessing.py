@@ -1,6 +1,5 @@
 ### PREPROCESSING IMPORTS ###
 
-import os
 import string
 import random
 import numpy as np
@@ -8,9 +7,8 @@ from sklearn.feature_extraction.text import CountVectorizer
 
 ### PREPROCESSING SETUP ###
 
-# Get the parent directory of the current directory
-parent_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-file_path = os.path.join(parent_dir, "dataset.txt")
+# Dataset File Path:
+file_path = "/main/dataset.txt"
 
 # Removal of Words Sets:
 punctuation = list(string.punctuation)

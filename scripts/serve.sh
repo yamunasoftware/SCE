@@ -1,6 +1,6 @@
 #!/bin/bash
 
 echo "Started."
-cd ../api
-python -B -c 'import serve; serve.clear_log()'
+cd ../src/api
+python -B serve.py
 echo "Duration: $SECONDS seconds"
