@@ -8,7 +8,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 ### PREPROCESSING SETUP ###
 
 # Dataset File Path:
-file_path = "/main/dataset.txt"
+file_path = "/main/models/dataset.txt"
 
 # Removal of Words Sets:
 punctuation = list(string.punctuation)
