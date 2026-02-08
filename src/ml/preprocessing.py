@@ -110,7 +110,6 @@ def test_data_finder(data, prop):
     prev_positive.append(random_index)
     indices.append(positive[random_index])
     k += 1
-
   return indices
 
 # Cleaning Data:

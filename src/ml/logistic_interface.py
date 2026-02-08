@@ -16,13 +16,11 @@ lookup_table = {
 
 # Classification Steps:
 def classify(sentences):
-  # Load the Weights:
-  weights, message = train()
+  # Predict labels for the sentences using the trained model (weights):
+  weights = train()
   feature_matrix = preprocessing.clean_set(sentences)
-
-  # Predict labels for the sentences using the trained model
   predicted_labels = logistic.predict(feature_matrix, weights)
-  return predicted_labels, message
+  return predicted_labels
 
 # Classification Labels Output:
 def label_output(predictions, lookup):
@@ -38,7 +36,7 @@ def label_output(predictions, lookup):
 
 # Main Training Function:
 def train():
-  data, labels, train_data, train_labels, test_data, test_labels = preprocessing.data_split()
+  _, _, train_data, train_labels, test_data, test_labels = preprocessing.data_split()
   if find_weights(filename) is None:
     initial_weights = [0.0 for i in range(4501)]
     step_size = 0.1
@@ -46,20 +44,18 @@ def train():
 
     final_weights = logistic.gradient_descent(train_data,train_labels, initial_weights, step_size, tolerance)
     np.save(filename, final_weights)
-
     train_predictions = logistic.predict(train_data, final_weights)
     test_predictions = logistic.predict(test_data, final_weights)
-    message = '200 - ' + str(round(validate(train_predictions, train_labels), 2)) + ' ' + str(round(validate(test_predictions, test_labels), 2))
 
-    return final_weights, message
+    train_accuracy = round(validate(train_predictions, train_labels), 2)
+    test_accuracy = round(validate(test_predictions, test_labels), 2)
+    return final_weights, train_accuracy, test_accuracy
   else:
-    return find_weights(filename), '200 - Found Weights'
+    return find_weights(filename), None, None
   
 # Validation Function:
 def validate(predictions, labels):
-  count = 0
-  i = 0
-
+  i, count = 0, 0
   while i < len(predictions):
     if predictions[i] == labels[i]:
       count += 1

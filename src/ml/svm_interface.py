@@ -15,15 +15,13 @@ lookup_table = {
   1: 'Positive'
 }
 
-# Classification Steps:
+# Classification Function:
 def classify(sentences):
-  # Load the Weights:
-  thetas, message = train()
+  # Predict labels for the sentences using the trained model (weights):
+  thetas = train()
   feature_matrix = preprocessing.clean_set(sentences)
-
-  # Predict labels for the sentences using the trained model
   predicted_labels = svm.predict(feature_matrix, thetas[0], thetas[1])
-  return predicted_labels, message
+  return predicted_labels
 
 # Classification Labels Output:
 def label_output(predictions, lookup):
@@ -40,7 +38,7 @@ def label_output(predictions, lookup):
 # Train Function:
 def train():
   if find_thetas(theta_filename) is None or find_thetas(theta0_filename) is None:
-    data, labels, train_data, train_labels, test_data, test_labels = preprocessing.data_split()
+    data, _, train_data, train_labels, test_data, test_labels = preprocessing.data_split()
     initial_theta = np.zeros(data.shape[1])
     initial_theta0 = np.zeros(1)
 
@@ -48,16 +46,17 @@ def train():
     step_size = 0.01
     tolerance = 0.01
 
-    theta, theta0 = svm.adam_optimizer(train_data,train_labels, initial_theta, initial_theta0,C, step_size, tolerance)
-    train_predictions = svm.predict(train_data,theta,theta0)
-    test_predictions = svm.predict(test_data,theta,theta0)
+    theta, theta0 = svm.optimize(train_data, train_labels, initial_theta, initial_theta0, C, step_size, tolerance)
+    train_predictions = svm.predict(train_data, theta,theta0)
+    test_predictions = svm.predict(test_data, theta,theta0)
 
     np.save(theta_filename, theta)
     np.save(theta0_filename, theta0)
-    message = '200 - ' + str(round(validate(train_predictions, train_labels), 2)) + ' ' + str(round(validate(test_predictions, test_labels), 2))
-    return [theta, theta0], message
+    train_accuracy = round(validate(train_predictions, train_labels), 2)
+    test_accuracy = round(validate(test_predictions, test_labels), 2)
+    return [theta, theta0], train_accuracy, test_accuracy
   else:
-    return [find_thetas(theta_filename), find_thetas(theta0_filename)], '200 - Found Weights'
+    return [find_thetas(theta_filename), find_thetas(theta0_filename)], None, None
 
 # Finds the Thetas:
 def find_thetas(file):
@@ -68,9 +67,7 @@ def find_thetas(file):
   
 # Validation Function:
 def validate(predictions, labels):
-  count = 0
-  i = 0
-
+  i, count = 0, 0
   while i < len(predictions):
     if predictions[i] == labels[i]:
       count += 1

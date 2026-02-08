@@ -1,8 +1,10 @@
 import numpy as np
 
+# Prediction Function:
 def predict(feature_matrix, theta, theta0):
   return ((feature_matrix.dot(theta) + theta0) >= 0)*2-1
 
+# Finds the Weights Derivatives:
 def weight_derivative(theta, theta0, C, feature_matrix, labels):
   n, d = feature_matrix.shape
   grad_theta = np.zeros(d)
@@ -23,15 +25,13 @@ def weight_derivative(theta, theta0, C, feature_matrix, labels):
       derivative_theta = np.zeros_like(theta)
       derivative_theta_0 = 0
 
-    # Finding the final gradient:
     grad_theta += derivative_theta
     grad_theta0 += derivative_theta_0
-
-  # Add Theta to the gradient:
   grad_theta += 2 * theta
   return grad_theta*C, grad_theta0*C
 
-def adam_optimizer(feature_matrix, labels, initial_theta, initial_theta0, C, step_size, tolerance):
+# Optimization Training Function:
+def optimize(feature_matrix, labels, initial_theta, initial_theta0, C, step_size, tolerance):
   b1 = 0.9
   b2 = 0.999
   eps = 10**-8
