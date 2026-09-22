@@ -1,0 +1,15 @@
+services:
+  sce:
+    build:
+      context: .
+    networks:
+      - sce-network
+    deploy:
+      mode: replicated
+      replicas: 4
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+
+networks:
+  sce-network:
